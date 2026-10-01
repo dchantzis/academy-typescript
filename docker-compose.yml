@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker-configuration/Dockerfile
+    image: "${APP_IMAGE:-typescript-practice:local}"
+    working_dir: /var/www
+    init: true
+    environment:
+      LOCAL_UID: "${LOCAL_UID:-1000}"
+      LOCAL_GID: "${LOCAL_GID:-1000}"
+    volumes:
+      - ./application:/var/www
+      - dependencies:/var/www/node_modules
+
+volumes:
+  dependencies:

@@ -1,0 +1,5 @@
+/.env
+/application/node_modules/
+/application/dist/
+.idea/
+.idea/*

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /var/www
+if [[ ! -f package.json ]]; then
+    echo "Missing /var/www/package.json. Check the application mount." >&2
+    exit 1
+fi
+# Explicit installs can repair a package/lock mismatch before normal bootstrap.
+if [[ ${1:-} == npm && ${2:-} == install ]]; then
+    exec "$@"
+fi
+if [[ -f package-lock.json ]]; then
+    npm ci
+else
+    npm install
+fi
+if (( $# > 0 )); then
+    exec "$@"
+fi

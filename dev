@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
+
+if [[ ! -f .env ]]; then
+    echo "Missing root .env. Create it with: cp .env.example .env" >&2
+    exit 1
+fi
+
+export LOCAL_UID=$(id -u)
+export LOCAL_GID=$(id -g)
+
+COMPOSE=(docker compose --project-directory "$PWD" --env-file "$PWD/.env" -f "$PWD/docker-compose.yml")
+APP_USER="$LOCAL_UID:$LOCAL_GID"
+
+if (( $# == 0 )); then exec "${COMPOSE[@]}" ps; fi
+command=$1
+shift
+
+case "$command" in
+    help|-h|--help)
+        cat <<'HELP'
+Usage: ./dev <command> [arguments]
+  build                     Build the Node image
+  start | up                Start the container in the background
+  stop | down               Remove container; preserve dependencies
+  logs                      Follow startup logs
+  app | ssh | bash          Open Bash as your local UID/GID
+  bootstrap                 Reinstall dependencies in the running container
+  npm [arguments]           Run npm in the container
+  node [arguments]          Run Node in the container
+  lesson <path> [arguments] Run a TS/JS file, relative to application/
+  watch <path>              Rerun a file when it changes
+  typecheck | check-types   Type-check every TypeScript practice file
+  test | t                  Run Node's test runner through tsx
+  run [command]             Disposable app container; installs dependencies first
+  config                    Show resolved Compose configuration
+  check                     Validate Compose configuration
+  images | containers       Show image/container status
+  purge                     DELETE container and dependency volume
+No command shows status. Unknown commands pass through to Compose.
+HELP
+        ;;
+    build) exec "${COMPOSE[@]}" build "$@" ;;
+    start|up) exec "${COMPOSE[@]}" up -d "$@" ;;
+    stop|down) exec "${COMPOSE[@]}" down "$@" ;;
+    logs) exec "${COMPOSE[@]}" logs -f "$@" app ;;
+    app|ssh|bash) exec "${COMPOSE[@]}" exec --user "$APP_USER" app bash "$@" ;;
+    npm|node) exec "${COMPOSE[@]}" exec --user "$APP_USER" app "$command" "$@" ;;
+    bootstrap) exec "${COMPOSE[@]}" exec --user "$APP_USER" app /usr/bin/start-container-local "$@" ;;
+    lesson) exec "${COMPOSE[@]}" exec --user "$APP_USER" app npm run lesson -- "$@" ;;
+    watch) exec "${COMPOSE[@]}" exec --user "$APP_USER" app npm run watch -- "$@" ;;
+    typecheck|check-types) exec "${COMPOSE[@]}" exec --user "$APP_USER" app npm run typecheck -- "$@" ;;
+    test|t) exec "${COMPOSE[@]}" exec --user "$APP_USER" app npm test -- "$@" ;;
+    run) exec "${COMPOSE[@]}" run --rm app "$@" ;;
+    config) exec "${COMPOSE[@]}" config "$@" ;;
+    check)
+        "${COMPOSE[@]}" config --quiet "$@"
+        echo "OK: Docker Compose configuration is valid."
+        ;;
+    images) exec "${COMPOSE[@]}" images "$@" ;;
+    containers) exec "${COMPOSE[@]}" ps -a "$@" ;;
+    purge) exec "${COMPOSE[@]}" down --volumes "$@" ;;
+    *) exec "${COMPOSE[@]}" "$command" "$@" ;;
+esac
