@@ -1,4 +1,4 @@
-# TypeScript practice — Docker environment
+# Academy: TypeScript practice — Docker environment
 
 This follows the Python learning project's application/, docker-configuration/ and ./dev layout. It runs Node 24, TypeScript and tsx in one development container. Docker and Docker Compose v2 are the only required host tools; you do not need host Node/npm.
 

@@ -16,13 +16,58 @@ Examples are independent unless explicitly marked as a complete application. Do 
 
 Keep a personal error log at the end. Record the error, its cause and your correction in your own words.
 
+## Maintaining and extending this guide
+
+This document has a fixed interview core (Lessons 0–9), named reference appendices, and an append-only area for additional lessons. Lesson numbers stay stable: the next new lesson is Lesson 10. Appendices do not consume lesson numbers.
+
+For future additions, ask: “Create Lesson 10 on [topic] as an appendable Markdown section.” Tell me the latest lesson number, relevant prerequisites, and any environment changes. You do not need to upload the whole guide for an independent new lesson. For revisions to an existing lesson, provide just that lesson, including any solution or notes you want preserved.
+
+Each new lesson contains its own metadata, explanation, examples, exercise, hidden solution, recap and references. This prevents additions from requiring changes to earlier solution sections or the original roadmap. Keep code examples self-contained, or explicitly name required files. Existing lessons refer to the core solutions appendix; future lessons contain their own solutions.
+
+Append the supplied section after the final lesson in the “Additional lessons” area. You can also keep each section as a separate file under `notes/`, such as `notes/10-database-access.md`. A Markdown heading beginning with `##` appears in VS Code's Outline, so no manually maintained table of contents is required.
+
+The laptop/Git repository is your current working copy. I cannot see edits there automatically. Independent additions need only their relevant context; precise edits or integration reviews require the affected section. This avoids reconstructing unseen changes.
+
+### New lesson template
+
+```text
+## Lesson 10. Title
+
+Lesson ID: L10
+Prerequisites: Lessons ...
+Priority: Interview core / optional extension
+Estimated time: ...
+Practice file: application/lessons/10-topic.ts
+
+### Goal
+### Explanation and PHP comparisons
+### Worked examples
+### Common mistakes
+### Exercise
+### Solution
+### Recap and completion checklist
+### References
+```
+
+Use a collapsed solution block in actual new lessons:
+
+```html
+<details>
+<summary>Solution — open after attempting the exercise</summary>
+
+Place the Markdown explanation and fenced code here, with blank lines around them.
+
+</details>
+```
+
 ## Roadmap and time budget
 
 The original 4–6 hours is a first exposure target. With rusty JavaScript, plan approximately 10–14 focused hours across 2–3 days, with breaks. These are estimates; slow down when syntax is still hard to reproduce.
 
 | Session | Focus | Approximate time |
 |---|---|---|
-| Day 1, A | Lessons 1–2: JS syntax and functions | 90 minutes |
+| Day 1, setup | Lesson 0: tools, project files and Docker workflow | 30–45 minutes |
+| Day 1, A | Lessons 1–2: JS data types, syntax and functions | 90–120 minutes |
 | Day 1, B | Lesson 3: data transformations | 60 minutes |
 | Day 1, C | Lessons 4–5: types, unions and narrowing | 90 minutes |
 | Day 2, A | Repeat yesterday's exercises without solutions | 45 minutes |
@@ -35,6 +80,8 @@ If time runs short, prioritise lessons 1–5, the application, and one mock. Lea
 
 ### Progress checklist
 
+- [ ] Explain how the project is created, how dependencies are installed, and how execution differs from type checking.
+- [ ] Identify runtime types, convert values deliberately, and explain object sharing.
 - [ ] Write a function and an object without copying.
 - [ ] Loop over an array and calculate a result.
 - [ ] Use map, filter and find; explain their outputs.
@@ -46,35 +93,316 @@ If time runs short, prioritise lessons 1–5, the application, and one mock. Lea
 - [ ] Complete the small application and check its edge cases.
 - [ ] Complete a timed mock while explaining decisions.
 
-## 0. Running the exercises
+## 0. Understanding and creating a TypeScript environment
 
-### Fastest starting point
+### Goal
 
-Use the [TypeScript Playground](https://www.typescriptlang.org/play). Enable strict checking in its compiler options. Paste one example at a time, inspect errors, and run it. This avoids setup blocking the first lesson.
+Understand what each tool does, which files we write, which files are generated, and how our Docker environment runs the code.
 
-### Local practice
+Do not run the project initialisation commands in our existing application directory. It is already initialised. They are explained here so you can recreate a project independently.
 
-In a new practice directory, with Node.js and npm already installed:
+### 0.1 The tools and their responsibilities
+
+| Tool | Responsibility | Familiar PHP comparison |
+|---|---|---|
+| Node.js | Executes JavaScript outside a browser | PHP CLI |
+| npm | Manages packages and project commands | Composer, plus named scripts |
+| TypeScript / `tsc` | Checks types and can compile TypeScript into JavaScript | Some overlap with PHPStan, but also compilation |
+| tsx | Lets us run TypeScript without manually compiling first | A convenient execution tool; no direct equivalent needed |
+| Docker | Provides the environment containing these tools | The same role as our PHP/Python containers |
+
+Node.js is the runtime, not a framework. It provides JavaScript with capabilities such as filesystem access and server networking.
+
+TypeScript adds type syntax and checking to JavaScript. Our setup uses `tsc` to check types and `tsx` to execute files. Running a file through tsx does not prove it passes type checking.
+
+### 0.2 Where the application lives
+
+On the laptop:
+
+```text
+academy-typescript/
+  application/
+```
+
+Inside the container, that same directory is mounted at:
+
+```text
+/var/www
+```
+
+Therefore:
+
+```text
+Laptop:    application/lessons/01-basics.ts
+Container: /var/www/lessons/01-basics.ts
+```
+
+Editing the laptop file changes what the container sees.
+
+The Dockerfile installs the environment. The application directory contains the project that runs in that environment.
+
+### 0.3 Creating a project from scratch
+
+With Node.js and npm available, a typical initialisation sequence is:
 
 ```bash
-mkdir typescript-practice
-cd typescript-practice
+mkdir example-project
+cd example-project
+
 npm init -y
-npm install --save-dev typescript tsx
+npm install --save-dev typescript tsx @types/node
+npx tsc --init
 ```
 
-Create `lesson.ts`. Run and separately type-check it:
+These commands have different jobs.
+
+#### `npm init -y`
+
+Creates `package.json` with default project metadata.
+
+`-y` accepts defaults rather than asking interactive questions.
+
+It does not install TypeScript or create application code.
+
+#### `npm install --save-dev typescript tsx @types/node`
+
+Installs three development dependencies:
+
+- `typescript`: provides the compiler/type checker, `tsc`.
+- `tsx`: runs TypeScript files.
+- `@types/node`: tells TypeScript about Node APIs.
+
+It also:
+
+- Adds dependencies to `package.json`.
+- Creates or updates `package-lock.json`.
+- Installs packages into `node_modules/`.
+
+`--save-dev` records these as development tools rather than runtime dependencies.
+
+#### `npx tsc --init`
+
+Invokes the installed TypeScript compiler and generates `tsconfig.json`.
+
+The generated configuration is a starting point. We adjust it for our project.
+
+`npx` can invoke package executables. Here it finds the locally installed `tsc`. When a requested package is missing, npx can offer to download it; it is not limited to local tools.
+
+### 0.4 Which files do I write?
+
+| File or directory | Created by | My responsibility |
+|---|---|---|
+| `package.json` | `npm init`, or written directly | Configure metadata/scripts; use npm to manage dependencies |
+| `package-lock.json` | npm | Commit it; normally do not edit manually |
+| `node_modules/` | npm | Do not edit or commit |
+| `tsconfig.json` | `tsc --init`, or written directly | Choose appropriate compiler settings |
+| `.ts` source files | Me | Write the application |
+| Dockerfile and Compose file | Me or a template | Configure the environment |
+| `dev` and startup scripts | Me or a template | Optional workflow helpers |
+
+For our course, the supplied `package.json` and `tsconfig.json` were written in advance.
+
+That is why our startup scripts do not run `npm init` or `tsc --init`: those files already exist.
+
+### 0.5 Understanding `package.json`
+
+This is similar in purpose to `composer.json`.
+
+It declares dependencies and named commands. For example:
+
+```json
+"scripts": {
+  "lesson": "tsx",
+  "watch": "tsx watch",
+  "typecheck": "tsc --noEmit",
+  "test": "tsx --test tests/*.test.ts"
+}
+```
+
+Running:
 
 ```bash
-npx tsx lesson.ts
-npx tsc --noEmit --strict --target ES2022 --module ESNext --moduleResolution bundler lesson.ts
+npm run typecheck
 ```
 
-`npm` manages packages. Local dependencies live in `node_modules`; `package.json` describes the project and `package-lock.json` records resolved dependencies. `npx` invokes package executables; the commands above use your installed local tools. `tsx` runs TS but does not replace the separate compiler check. `tsc` is the TypeScript compiler; `--noEmit` asks it to check without writing JavaScript.
+looks up `scripts.typecheck` and executes:
 
-An editor error, a compiler error and a runtime exception are different things. Check all three. In the interview, use the existing project's scripts and configuration rather than replacing them.
+```bash
+tsc --noEmit
+```
 
-## 1. JavaScript syntax you need again
+npm makes locally installed executables from `node_modules/.bin` available to these scripts. TypeScript does not need to be installed globally.
+
+Running:
+
+```bash
+npm run lesson -- lessons/01-basics.ts
+```
+
+executes:
+
+```bash
+tsx lessons/01-basics.ts
+```
+
+The `--` separates npm's arguments from arguments passed to the script.
+
+### 0.6 Understanding the lockfile and dependency directory
+
+`package.json` declares the packages we want.
+
+`package-lock.json` records their resolved versions, including dependencies of those dependencies. Its role resembles `composer.lock`.
+
+`node_modules/` contains installed packages. Its role resembles `vendor/`.
+
+Our startup chooses:
+
+```bash
+if [[ -f package-lock.json ]]; then
+    npm ci
+else
+    npm install
+fi
+```
+
+- `npm install` installs dependencies and can create/update the lockfile.
+- `npm ci` performs a clean installation from the lockfile and fails if it disagrees with `package.json`.
+
+Commit both package files. Do not commit `node_modules/`.
+
+In our Docker setup, installed dependencies live in a named volume mounted at `/var/www/node_modules`.
+
+### 0.7 Understanding `tsconfig.json`
+
+This configures TypeScript's compiler and checker.
+
+For example:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true
+  },
+  "include": [
+    "lessons/**/*.ts",
+    "exercises/**/*.ts",
+    "mock-interviews/**/*.ts",
+    "tests/**/*.ts"
+  ]
+}
+```
+
+This is an explanatory extract, not a replacement for our complete configuration.
+
+- `strict` enables stricter type checking.
+- `noEmit` prevents the compiler from writing generated JavaScript.
+- `include` selects the project's starting source files.
+- `**/*.ts` matches TypeScript files in a directory and its subdirectories.
+
+Imported files can also become part of the project.
+
+Running `tsc` without a filename uses the project configuration. Passing a source filename directly changes this behaviour: it does not use `tsconfig.json` in the normal project-based way.
+
+For our course, use `./dev typecheck` to check the configured project.
+
+### 0.8 Following our Docker startup
+
+The startup sequence is:
+
+1. Docker creates the container from our Node image.
+2. Compose mounts `application/` at `/var/www`.
+3. `start-container` prepares dependency-volume permissions.
+4. It switches to our local user's numeric UID/GID.
+5. `start-container-local` installs dependencies.
+6. `sleep infinity` keeps the container available for commands.
+
+We are not starting an HTTP server yet. These are terminal-based exercises.
+
+The initialisation commands are absent because the project's configuration files were supplied already.
+
+### 0.9 Following an execution command
+
+```bash
+./dev lesson lessons/01-basics.ts
+```
+
+The sequence is:
+
+1. The laptop runs the Bash script `dev`.
+2. The script executes a command inside the running app container.
+3. Inside `/var/www`, npm reads `package.json`.
+4. npm invokes `tsx lessons/01-basics.ts`.
+5. The file executes and its console output appears in the terminal.
+
+### 0.10 Following a type-checking command
+
+```bash
+./dev typecheck
+```
+
+The sequence is:
+
+1. `dev` invokes `npm run typecheck` inside the container.
+2. npm invokes `tsc --noEmit`.
+3. tsc reads `tsconfig.json`.
+4. It checks the selected TypeScript files.
+5. It reports errors, or finishes successfully without error output.
+
+It does not execute the lessons or their `console.log` statements.
+
+| Command | What it checks or runs |
+|---|---|
+| `./dev check` | Validates Docker Compose configuration |
+| `./dev typecheck` | Checks TypeScript types |
+| `./dev lesson lessons/01-basics.ts` | Executes that source file |
+| `./dev test` | Executes automated tests |
+
+### 0.11 Practical inspection
+
+Run these from the project root:
+
+```bash
+./dev node --version
+./dev npm --version
+./dev npm ls --depth=0
+```
+
+Then open:
+
+```text
+application/package.json
+application/tsconfig.json
+application/lessons/01-basics.ts
+```
+
+Locate the `lesson` and `typecheck` scripts. Trace each command using the explanations above.
+
+Finally, run:
+
+```bash
+./dev lesson lessons/01-basics.ts
+./dev typecheck
+```
+
+Observe the difference between execution output and type-checking output.
+
+### Recap
+
+Before moving to Lesson 1, be able to explain:
+
+- Node executes JavaScript.
+- npm installs dependencies and invokes named scripts.
+- package.json describes the project.
+- package-lock.json records resolved dependencies.
+- node_modules contains installed packages.
+- tsconfig.json configures TypeScript checking/compilation.
+- tsx executes our TypeScript files.
+- tsc checks them.
+- Docker supplies the environment.
+- dev is our convenience wrapper, not a TypeScript requirement.
+
+## 1. JavaScript data types and syntax you need again
 
 ### Variables and primitive values
 
@@ -99,6 +427,148 @@ user.name = "Dimitris"; // allowed
 ```
 
 JavaScript normally uses `number` for both integers and floating-point numbers. For money here, use integer minor units: 1299 means £12.99. This avoids many decimal rounding problems; it does not provide unlimited integer precision.
+
+### Data types: values first, TypeScript annotations later
+
+In JavaScript, a value has a runtime type. Ordinary JavaScript variables can be reassigned to values of different types. TypeScript adds rules about which assignments your program permits before execution.
+
+```js
+let value = 3;
+value = "three"; // valid JavaScript
+```
+
+In TypeScript, `let value = 3` normally infers `number`; assigning a string then produces a type error. We cover inference properly in Lesson 4. Keep this distinction in mind: runtime behaviour comes from JavaScript; static checking comes from TypeScript.
+
+### The primitive types
+
+| Type | Example | How to think about it |
+|---|---|---|
+| string | `"Print"` | Text; single quotes, double quotes or backticks |
+| number | `3`, `12.5` | Ordinary numeric values; no separate int/float type |
+| boolean | `true`, `false` | Logical state |
+| undefined | `undefined` | Often a missing or unassigned value |
+| null | `null` | Often an explicitly empty value |
+| bigint | `9007199254740993n` | Large integers; distinct from number |
+| symbol | `Symbol("id")` | Unique identity, often for special property keys |
+
+Spend practice time on the first five. Recognise bigint and symbol without attempting mastery now.
+
+```js
+const title = "Print";
+const price = 12.5;
+const available = true;
+let deliveryDate;             // undefined
+const cancelledAt = null;     // explicitly empty
+const largeId = 9007199254740993n;
+const internalKey = Symbol("id");
+```
+
+The final `n` marks a bigint literal; bigint does not represent fractional numbers. Arithmetic such as `largeId + 1n` works; mixing bigint and number in arithmetic, such as `largeId + 1`, throws. Built-in JSON serialization does not handle bigint automatically. Each call to `Symbol("id")` produces a distinct symbol even when the description matches.
+
+### Numbers, invalid values and precision
+
+Use minor units for our monetary examples. `1200` means £12.00. A number annotation alone does not promise an integer, a positive value, or a valid price.
+
+```js
+console.log(0.1 + 0.2); // 0.30000000000000004
+console.log(Number("bad")); // NaN
+console.log(Number.isNaN(Number("bad"))); // true
+console.log(Number.isInteger(2.5)); // false
+console.log(Number.isFinite(Infinity)); // false
+console.log(Number.isSafeInteger(9007199254740993)); // false
+```
+
+`NaN` is a special number value, despite its name. Use `Number.isNaN` rather than comparing a value with NaN. For bounded integer domain values, consider `Number.isSafeInteger` plus your business range checks.
+
+### null and undefined
+
+```js
+const order = { cancelledAt: null };
+let deliveryDate;
+console.log(deliveryDate === undefined); // true
+console.log(order.cancelledAt === null); // true
+```
+
+A missing object property also reads as undefined. Accessing a property of null or undefined throws unless guarded. Unlike a typical PHP unset-variable access, reading an entirely undeclared JS variable throws a ReferenceError. A declared variable without an assigned value is different.
+
+`null` and `undefined` are distinct: `null === undefined` is false. Our types and API conventions should state which represents absence. JSON has null, but no undefined value: JSON serialization omits undefined-valued object properties and represents undefined array entries as null.
+
+### Checking types at runtime
+
+`typeof` is a JavaScript operator returning a string describing a value's type. These checks execute; they are not TypeScript annotations.
+
+```js
+console.log(typeof "Print");      // string
+console.log(typeof 1200);         // number
+console.log(typeof false);        // boolean
+console.log(typeof undefined);    // undefined
+console.log(typeof 1n);           // bigint
+console.log(typeof Symbol("id")); // symbol
+console.log(typeof {});           // object
+console.log(typeof []);           // object
+console.log(typeof null);         // object — historical quirk
+console.log(typeof (() => 1));    // function
+console.log(Array.isArray([]));   // true
+```
+
+Check null with `value === null`; check arrays with `Array.isArray(value)`. Checking `typeof value === "object"` alone does not establish that it is a non-null object with particular fields. Functions are callable objects, though typeof reports function.
+
+In PHP, you may reach for `is_string`, `is_array` or `gettype`. In JS, typeof is useful for primitives, while arrays and object shapes require more specific checks.
+
+### Primitive values versus objects
+
+Primitive values are immutable. Reassigning a variable creates a different binding value; it does not change the old primitive. Objects, including arrays, can be mutated, and multiple variables can hold references to the same object.
+
+```js
+let firstQuantity = 2;
+let secondQuantity = firstQuantity;
+secondQuantity = 3;
+console.log(firstQuantity); // 2
+
+const original = { quantity: 2 };
+const shared = original;
+shared.quantity = 3;
+console.log(original.quantity); // 3
+console.log(shared === original); // true
+console.log({ quantity: 3 } === { quantity: 3 }); // false
+```
+
+JavaScript passes arguments by value. When that value is an object reference, the function can mutate the shared object. Reassigning the function's parameter does not reassign the caller's variable. Avoid the misleading shortcut “all objects are passed by reference”. PHP objects have similar sharing behaviour; PHP arrays generally use copy-on-write semantics.
+
+`const` prevents rebinding a variable, not mutation of the object it refers to. Object identity also explains why identical-looking objects do not compare equal with ===. We will practise shallow copies in Lesson 2.
+
+### Explicit conversion versus implicit coercion
+
+Conversion is deliberate; coercion occurs as part of another operation. JS and PHP conversion rules differ, so do not assume familiar PHP outcomes.
+
+```js
+console.log(Number("3") + 1); // 4: explicit conversion
+console.log(String(3));       // "3"
+console.log("3" + 1);         // "31": implicit string conversion
+console.log("3" - 1);         // 2: implicit numeric conversion
+console.log(Number(""));     // 0: usually undesirable for a required field
+console.log(Number("3x"));   // NaN
+console.log(parseInt("3x", 10)); // 3: parses an initial integer portion
+console.log(Boolean("false")); // true: non-empty string
+console.log(Boolean("0"));     // true: differs from PHP's "0"
+console.log(Boolean([]));      // true: differs from PHP's empty array
+```
+
+Do not parse a text boolean with Boolean unless truthiness is what you intend. Compare explicitly with the accepted text values. For a required numeric field, reject blank strings before numeric conversion, then validate the converted value.
+
+Prefer === and !== over coercing equality. Truthiness is appropriate for some conditions; explicit null/undefined checks are better when zero or empty text is meaningful.
+
+### Small TypeScript preview
+
+```ts
+let quantity: number = 2;
+const title: string = "Print";
+const available: boolean = true;
+const cancelledAt: string | null = null;
+const note: string | undefined = undefined;
+```
+
+These are type annotations. `|` means “one of these types”; we practise unions in Lesson 5. Types follow names. Use lowercase primitive names. TypeScript still uses number for both integers and decimals; it does not introduce PHP-style int and float types.
 
 ### Objects versus arrays
 
@@ -140,11 +610,24 @@ console.log(greeting, quantity);
 
 Template strings use backticks. `+` can concatenate strings: `"3" + 1` is `"31"`. Validate numeric conversions: `Number("bad")` produces `NaN`; `Number("")` produces zero. Consider `Number.isFinite` and `Number.isInteger` where appropriate.
 
+### Exercise 1A: inspect types and sharing
+
+Practice file: `application/lessons/01-data-types.js`. Run it with `./dev lesson lessons/01-data-types.js`. Use a JS file for deliberate coercion examples; TypeScript may reject some of them even though JavaScript can run them.
+
+1. Create a string, number, boolean, null value, unassigned variable, array and object. Print each value and its typeof result.
+2. Explain why typeof cannot distinguish an array from a plain object or null.
+3. Predict `"5" + 2`, `Number("5") + 2`, `Boolean("false")` and `Boolean([])` before running them.
+4. Assign one object to two variables. Change quantity through the second and inspect the first.
+5. Repeat with a primitive number and explain the different result.
+6. Optional: inspect a bigint and two symbols with the same description.
+
+The solution is in Appendix A, under Solution 1A.
+
 ### Exercise 1
 
 Create three items with `name`, `priceMinor` and `quantity`. Using a loop, calculate their total. Print a message containing the result. Include one item with zero quantity. Do this in JavaScript first.
 
-**Recap:** const/let, object braces, array brackets, dot access, for...of, strict equality, template strings.
+**Recap:** primitive versus object values; typeof quirks; null versus undefined; deliberate conversion; const/let; object and array syntax; for...of; strict equality; template strings.
 
 ## 2. Functions and modern syntax
 
@@ -658,9 +1141,38 @@ Implement a feature evaluator with a global enabled flag and per-user boolean ov
 - Did I check behaviour with examples?
 - Did I collaborate when requirements changed?
 
-## 10. Exercise solutions
+## Appendix A. Core exercise solutions
 
 These are possible solutions, not the only correct ones. Do not memorise them.
+
+### Solution 1A
+
+```js
+const values = ["Print", 1200, true, null, undefined, [], {}];
+for (const value of values) {
+  console.log(value, typeof value);
+}
+console.log(Array.isArray([])); // true
+console.log("5" + 2);          // "52"
+console.log(Number("5") + 2);  // 7
+console.log(Boolean("false")); // true
+console.log(Boolean([]));      // true
+
+const original = { quantity: 2 };
+const shared = original;
+shared.quantity = 3;
+console.log(original.quantity); // 3
+
+let first = 2;
+let second = first;
+second = 3;
+console.log(first); // 2
+
+console.log(typeof 1n); // bigint
+console.log(Symbol("id") === Symbol("id")); // false
+```
+
+The runtime type labels are string, number, boolean, object, undefined, object, object. Array.isArray handles the array case; equality with null handles null. Object assignment shares identity; number assignment copies a primitive value.
 
 ### Solution 1
 
@@ -890,7 +1402,7 @@ main().catch((error: unknown) => {
 
 The lookup is injected, making behaviour easy to check without HTTP. Checks are sequential for clarity and early exit. Validation precedes external calls. Lookup failure is modelled separately from invalid input. Limits to discuss: trusted typed Order input, integer precision for very large totals, stock changing after lookup, lack of reservation, and the deliberate duplicate-SKU rule. Production code would address these according to requirements.
 
-## 11. Quick revision reference
+## Appendix B. Quick revision reference
 
 | PHP habit/concept | JS / TS equivalent or difference |
 |---|---|
@@ -939,7 +1451,7 @@ const quantity = found?.quantity ?? 0;
 - Clarify permitted references and assistance.
 - Spend the final session repeating weak exercises, not collecting new topics.
 
-## 12. Personal revision notes
+## Appendix C. Personal revision notes
 
 | Date | What I struggled with | Correction/example | Repeat tomorrow? |
 |---|---|---|---|
@@ -947,7 +1459,7 @@ const quantity = found?.quantity ?? 0;
 
 After each session, write three things you can now do and one thing to repeat. Begin the next session with that repetition.
 
-## Further reference
+## Appendix D. Further reference
 
 These are references, not extra prerequisite reading. Consult the relevant section when a question arises. Examples and exercises in this guide are original teaching material.
 
@@ -955,3 +1467,13 @@ These are references, not extra prerequisite reading. Consult the relevant secti
 - [TypeScript Handbook: Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
 - [TypeScript Playground](https://www.typescriptlang.org/play)
 - [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- [MDN Data types and structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures)
+
+
+## Additional lessons — append new lessons below
+
+The next available lesson number is **10**. This is the extension area, not part of the timed interview core. Append new lessons here in numeric order, with their exercises and solutions included inside each lesson. Existing lesson and appendix numbers remain unchanged.
+
+Potential extensions, when time allows: deeper testing, Node's event loop, HTTP APIs, PostgreSQL access, transactions and connection pools, React fundamentals. These are ideas, not lessons already delivered or a fixed next sequence.
+
+<!-- Append Lesson 10 and later lessons below this line. -->
