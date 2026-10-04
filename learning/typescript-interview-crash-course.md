@@ -2,11 +2,13 @@
 
 Prepared for Dimitrios • 1 October 2026
 
+Updated 4 October 2026 after Lessons 0–6 and the revised interview brief.
+
 ## Purpose and assumptions
 
 You are an experienced backend engineer with strong PHP/Laravel knowledge and previous JavaScript, MooTools and jQuery experience. Assume JavaScript syntax is now rusty enough to require a reference. This guide rebuilds that syntax before adding TypeScript.
 
-The interview is a screen-shared peer programming session. The task, framework and environment are unknown. We will prepare with plain TypeScript, data transformations and business rules. This is an interview preparation guide, not exhaustive language mastery or a React course.
+The interview is a **90-minute TypeScript screen-shared peer programming session on Tuesday, 6 October 2026 at 14:00 UK time**. The task, framework and environment are unknown. We will prepare with plain TypeScript, data transformations and business rules. This is an interview preparation guide, not exhaustive language mastery or a React course.
 
 ## How to study
 
@@ -22,7 +24,7 @@ This document has a fixed interview core (Lessons 0–9), named reference append
 
 For future additions, ask: “Create Lesson 10 on [topic] as an appendable Markdown section.” Tell me the latest lesson number, relevant prerequisites, and any environment changes. You do not need to upload the whole guide for an independent new lesson. For revisions to an existing lesson, provide just that lesson, including any solution or notes you want preserved.
 
-Each new lesson contains its own metadata, explanation, examples, exercise, hidden solution, recap and references. This prevents additions from requiring changes to earlier solution sections or the original roadmap. Keep code examples self-contained, or explicitly name required files. Existing lessons refer to the core solutions appendix; future lessons contain their own solutions.
+Each new lesson contains its own metadata, chapter index with time estimates, explanation, examples, exercise, hidden solution, recap and references. Add one entry to the lesson index when appending a new lesson; no other earlier content needs reconstruction. This prevents additions from requiring changes to earlier solution sections or the original roadmap. Keep code examples self-contained, or explicitly name required files. Existing lessons refer to the core solutions appendix; future lessons contain their own solutions.
 
 Append the supplied section after the final lesson in the “Additional lessons” area. You can also keep each section as a separate file under `notes/`, such as `notes/10-database-access.md`. A Markdown heading beginning with `##` appears in VS Code's Outline, so no manually maintained table of contents is required.
 
@@ -34,6 +36,7 @@ The laptop/Git repository is your current working copy. I cannot see edits there
 ## Lesson 10. Title
 
 Lesson ID: L10
+Chapters and time budget: list each chapter, its estimate and the lesson total
 Prerequisites: Lessons ...
 Priority: Interview core / optional extension
 Estimated time: ...
@@ -60,38 +63,203 @@ Place the Markdown explanation and fenced code here, with blank lines around the
 </details>
 ```
 
-## Roadmap and time budget
+## Lesson and chapter index
 
-The original 4–6 hours is a first exposure target. With rusty JavaScript, plan approximately 10–14 focused hours across 2–3 days, with breaks. These are estimates; slow down when syntax is still hard to reproduce.
+Times below include explanation, typing and the listed exercise/review, but exclude breaks. They are **planning estimates, not recorded completion times**. For Lessons 0–5, the chapter-level estimates are newly itemised here; Lessons 6–9 use our discussed or revised estimates. Questions, repetition and debugging can take longer. Completed lessons remain available for revision; their full totals are not additional work before Tuesday.
 
-| Session | Focus | Approximate time |
-|---|---|---|
-| Day 1, setup | Lesson 0: tools, project files and Docker workflow | 30–45 minutes |
-| Day 1, A | Lessons 1–2: JS data types, syntax and functions | 90–120 minutes |
-| Day 1, B | Lesson 3: data transformations | 60 minutes |
-| Day 1, C | Lessons 4–5: types, unions and narrowing | 90 minutes |
-| Day 2, A | Repeat yesterday's exercises without solutions | 45 minutes |
-| Day 2, B | Lessons 6–7: reuse and async | 90 minutes |
-| Day 2, C | Lesson 8: practical application | 90 minutes |
-| Day 2, D | First mock session and review | 60 minutes |
-| Optional Day 3 | Fresh mock, repair weak areas, revision | 2–3 hours |
+Chapter groups follow the teaching sequence. Some document subsections and supplementary examples sit together within one indexed chapter; use each lesson link to reach the corresponding material.
 
-If time runs short, prioritise lessons 1–5, the application, and one mock. Learn to recognise classes and utility types; do not spend hours on advanced generics. Avoid starting a large React application before the basics are comfortable.
+| Lesson | Status | Estimated focused time |
+|---|---|---:|
+| [0. Environment and tools](#0-understanding-and-creating-a-typescript-environment) | Complete | 50–80 min |
+| [1. JavaScript data types and syntax](#1-javascript-data-types-and-syntax-you-need-again) | Complete | 75–110 min |
+| [2. Functions and modern syntax](#2-functions-and-modern-syntax) | Complete | 65–95 min |
+| [3. Arrays and data transformations](#3-arrays-and-data-transformations) | Complete | 70–100 min |
+| [4. TypeScript foundations](#4-typescript-foundations) | Complete | 60–95 min |
+| [5. Missing values, unions and narrowing](#5-missing-values-unions-and-narrowing) | Complete | 65–105 min |
+| [6. Generics, utilities and classes](#6-generics-utilities-and-classes-focused-introduction) | Complete | 95–130 min |
+| [7. Modules, promises and external data](#7-modules-promises-and-external-data) | Next | 95–135 min |
+| [8. Practical order application](#8-practical-application-order-preparation) | Remaining | 60–90 min |
+| [9. Peer programming rehearsal](#9-peer-programming-rehearsal) | Remaining | 110–120 min |
 
-### Progress checklist
+### Index: Lesson 0 — Environment and tools
 
-- [ ] Explain how the project is created, how dependencies are installed, and how execution differs from type checking.
-- [ ] Identify runtime types, convert values deliberately, and explain object sharing.
-- [ ] Write a function and an object without copying.
-- [ ] Loop over an array and calculate a result.
-- [ ] Use map, filter and find; explain their outputs.
-- [ ] Type parameters, return values and object properties.
-- [ ] Handle missing values without assertions.
-- [ ] Model states with a union and narrow them.
+Status: **Complete**. [Go to Lesson 0](#0-understanding-and-creating-a-typescript-environment).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 0.1 | Tools and directory layout | 5–10 min |
+| 0.2 | Create a project; authored versus generated files | 10–15 min |
+| 0.3 | package.json, lockfile and dependencies | 10–15 min |
+| 0.4 | tsconfig.json and strict checking | 10–15 min |
+| 0.5 | Docker startup, execution and type-check commands | 10–15 min |
+| 0.6 | Practical inspection and recap | 5–10 min |
+
+### Index: Lesson 1 — JavaScript data types and syntax
+
+Status: **Complete**. [Go to Lesson 1](#1-javascript-data-types-and-syntax-you-need-again).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 1.1 | Variables, const/let/var and primitive types | 10–15 min |
+| 1.2 | Numbers, precision, bigint and symbol | 10–15 min |
+| 1.3 | null, undefined, typeof and arrays | 10–15 min |
+| 1.4 | References, mutation and copies | 10–15 min |
+| 1.5 | Conversion, coercion and truthiness | 10–15 min |
+| 1.6 | Objects, loops, equality and template strings | 10–15 min |
+| 1.7 | Exercises and review | 15–20 min |
+
+### Index: Lesson 2 — Functions and modern syntax
+
+Status: **Complete**. [Go to Lesson 2](#2-functions-and-modern-syntax).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 2.1 | Named functions, defaults and arrows | 10–15 min |
+| 2.2 | Callbacks and closures | 15–20 min |
+| 2.3 | Object and array destructuring | 10–15 min |
+| 2.4 | Spread and rest | 10–15 min |
+| 2.5 | Optional chaining and nullish coalescing | 10–15 min |
+| 2.6 | Exercise and review | 10–15 min |
+
+### Index: Lesson 3 — Arrays and data transformations
+
+Status: **Complete**. [Go to Lesson 3](#3-arrays-and-data-transformations).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 3.1 | map, filter and find | 15–20 min |
+| 3.2 | some, every and reduce | 10–15 min |
+| 3.3 | Sorting, copying and mutation | 10–15 min |
+| 3.4 | forEach and direct callbacks | 5–10 min |
+| 3.5 | Map, Set and keyed storage reminders | 15–20 min |
+| 3.6 | Order-summary exercise and review | 15–20 min |
+
+### Index: Lesson 4 — TypeScript foundations
+
+Status: **Complete**. [Go to Lesson 4](#4-typescript-foundations).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 4.1 | Inference, annotations, objects and arrays | 10–15 min |
+| 4.2 | Typed functions and optional properties | 10–15 min |
+| 4.3 | Function types and callbacks | 5–10 min |
+| 4.4 | void and direct function callbacks | 5–10 min |
+| 4.5 | Aliases, interfaces, extends and structural typing | 10–15 min |
+| 4.6 | Tuples and destructuring | 5–10 min |
+| 4.7 | Typed-order exercise and review | 15–20 min |
+
+### Index: Lesson 5 — Missing values, unions and narrowing
+
+Status: **Complete**. [Go to Lesson 5](#5-missing-values-unions-and-narrowing).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 5.1 | Unions and typeof narrowing | 10–15 min |
+| 5.2 | Optional and nullable values | 5–10 min |
+| 5.3 | Literal types | 5–10 min |
+| 5.4 | Discriminated unions | 10–15 min |
+| 5.5 | unknown versus any | 10–15 min |
+| 5.6 | Assertions and their runtime limitations | 5–10 min |
+| 5.7 | never and exhaustive checks | 10–15 min |
+| 5.8 | Quantity-result exercise and review | 10–15 min |
+
+### Index: Lesson 6 — Generics, utilities and classes
+
+Status: **Complete**. [Go to Lesson 6](#6-generics-utilities-and-classes-focused-introduction).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 6.1 | Generics and inference | 15–20 min |
+| 6.2 | Generic constraints | 10–15 min |
+| 6.3 | Partial, Pick, Omit, Readonly and Record | 20–25 min |
+| 6.4 | Classes, constructors, validation and privacy | 15–20 min |
+| 6.5 | Inheritance, abstract classes and implements | 15–20 min |
+| 6.6 | Enums versus unions | 5–10 min |
+| 6.7 | Catalogue exercise and review | 15–20 min |
+
+### Index: Lesson 7 — Modules, promises and external data
+
+Status: **Next**. [Go to Lesson 7](#7-modules-promises-and-external-data).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 7.1 | Modules: export, import and import type | 10–15 min |
+| 7.2 | Promises, Promise<T>, resolution and rejection | 15–20 min |
+| 7.3 | async/await and returned promises | 15–20 min |
+| 7.4 | Errors, sequential work and Promise.all | 15–20 min |
+| 7.5 | Fetch, HTTP status and unknown JSON validation | 20–30 min |
+| 7.6 | Integration exercise and review | 20–30 min |
+
+### Index: Lesson 8 — Practical order application
+
+Status: **Remaining**. [Go to Lesson 8](#8-practical-application-order-preparation).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 8.1 | Clarify requirements; domain and result types | 5–10 min |
+| 8.2 | Totals, validation and duplicate policy | 10–15 min |
+| 8.3 | Async repository and stock checking | 10–15 min |
+| 8.4 | Automated tests and debugging | 15–20 min |
+| 8.5 | Requirement change: aggregate SKU demand | 10–15 min |
+| 8.6 | Review, mutation checks and limitations | 10–15 min |
+
+### Index: Lesson 9 — Peer programming rehearsal
+
+Status: **Remaining**. [Go to Lesson 9](#9-peer-programming-rehearsal).
+
+| Chapter | Topics | Estimate |
+|---|---|---:|
+| 9.1 | Mock: inspect project and clarify requirements | 10 min |
+| 9.2 | Mock: implement first working version | 25 min |
+| 9.3 | Mock: tests and debugging | 20 min |
+| 9.4 | Mock: requirement change and async repository | 20 min |
+| 9.5 | Mock: final checks and trade-offs | 15 min |
+| 9.6 | Feedback and targeted revision | 20–30 min |
+
+Lesson 6's optional StockTracker reinforcement adds approximately **10–15 minutes** when repeated. Lesson 9's alternative feature-evaluator practice is a separate optional session of **30–45 minutes**, not included in the primary mock estimate.
+
+Reference appendices: A — solutions; B — quick revision, common mistakes and deferred tooling; C — personal notes; D — further reading. New independent lessons belong in the append-only area after the appendices, starting at Lesson 10.
+
+## Roadmap, progress and remaining time
+
+### Progress as of Sunday, 4 October
+
+Lessons **0–6 are complete**, including the typed order, quantity-result, product catalogue and StockTracker exercises. Completion means we have covered and practised the material; it does not mean every signature is available from memory. Map operations, missing-value handling and combining concepts remain useful revision targets.
+
+The interview brief confirms only 90 minutes of TypeScript pairing. Node.js, React, database access, the supplied repository and permitted assistance remain unknown. Prepare general programming, data handling, async execution, testing and collaboration. Ask the recruiter about the environment and permitted references if possible.
+
+| Remaining work | Focus | Planning estimate |
+|---|---|---:|
+| Lesson 7 | Modules, promises, async/await, errors, concurrency and runtime validation | 95–135 minutes |
+| Lesson 8 | Staged order application, async repository, meaningful tests and a changed requirement | 60–90 minutes |
+| Lesson 9 | Realistic pairing mock | 90 minutes + 20–30 minutes review |
+
+Allow approximately **4½–6 focused hours**, with additional breaks and reinforcement. Earlier estimates proved optimistic for learning through questions and repeated practice. These are planning ranges, not deadlines for understanding.
+
+| Day | Plan |
+|---|---|
+| Sunday, 4 October | Complete Lessons 7–8 if energy permits; repeat earlier tools inside the new tasks |
+| Monday, 5 October | 90-minute mock, review, targeted revision and a second smaller task |
+| Tuesday, 6 October, morning | Light recall, environment and screen-sharing check; interview at 14:00 |
+
+Prioritise independent implementation over collecting advanced features. React, real database configuration, event-loop depth and advanced type programming are optional extensions. Node applications can connect to databases through drivers/ORMs, but database setup is not part of Lessons 0–9. TypeScript is the type system, not the database connector.
+
+### Retrieval practice and completion checks
+
+Start a session with 10 minutes from a blank file: Map lookup/update, an array transformation, or a union-handling function. Try without a reference, consult one when stuck, then explain the correction. During the mock, practise checking a method signature instead of guessing repeatedly.
+
+- [x] Covered project creation, dependencies, execution versus type checking.
+- [x] Covered runtime types, conversion, sharing and shallow copies.
+- [x] Practised functions, loops and array transformations.
+- [x] Practised annotations, interfaces, tuples, unions and narrowing.
+- [x] Practised generics, utilities, classes and Map-backed storage.
+- [ ] Reproduce the earlier patterns independently in a new task.
 - [ ] Write and await a Promise-returning function.
-- [ ] Explain why typed JSON still requires validation.
-- [ ] Complete the small application and check its edge cases.
-- [ ] Complete a timed mock while explaining decisions.
+- [ ] Validate external JSON rather than assert its type.
+- [ ] Write meaningful tests and debug a failing case.
+- [ ] Complete the application and handle a requirement change.
+- [ ] Complete a 90-minute mock while explaining decisions.
 
 ## 0. Understanding and creating a TypeScript environment
 
@@ -702,6 +870,24 @@ Write `describeItem(item)` returning `"Print: 2 units"`. Destructure the input i
 
 **Recap:** named function first; arrows for short callbacks; destructuring extracts; spread shallow-copies; ?? preserves zero.
 
+### Callback and closure reminders from practice
+
+```js
+function applyToPrice(price, operation) {
+  return operation(price);
+}
+const double = (value) => value * 2;
+console.log(applyToPrice(1200, double)); // 2400
+
+function makeMinimumChecker(minimum) {
+  return (total) => total >= minimum;
+}
+const freeDelivery = makeMinimumChecker(5000);
+console.log(freeDelivery(7500)); // true
+```
+
+The first call supplies a function; applyToPrice later calls it with 1200. A closure has two stages: makeMinimumChecker receives and remembers minimum, then the returned function receives total. Each factory call creates its own captured context. Array rest collects remaining elements (possibly an empty array); spread copies the outer array. A default parameter or destructuring default applies to undefined, not null.
+
 ## 3. Arrays and data transformations
 
 ```js
@@ -759,6 +945,37 @@ console.log(quantities.get("A")); // 2
 Using the items above: return positive-quantity items, return their SKUs, calculate the total, find a missing SKU and handle its absence, and return items ordered by price without changing the input array.
 
 **Recap:** filter selects, map transforms, find may miss, reduce needs an initial accumulator, sort mutates.
+
+### Map, Record and object shapes: retrieval reference
+
+An interface describes a type; a Map stores runtime entries. Record is a type describing a plain object, not an array and not a runtime constructor. The storage choice does not change how callers invoke the class's public methods.
+
+| Operation | Map | Plain object typed as Record |
+|---|---|---|
+| Store/replace | `map.set(key, value)` | `object[key] = value` |
+| Read | `map.get(key)` | `object[key]` |
+| Exists | `map.has(key)` | `Object.hasOwn(object, key)` |
+| Remove | `map.delete(key)` | `delete object[key]` |
+| Count | `map.size` | `Object.keys(object).length` |
+
+Map.set takes **two arguments**, not one object containing a key and value. Map has no add method; Set has add. Map.get returns undefined when missing. An entry containing zero still exists. `get(key) ?? 0` gives a fallback but does not distinguish missing from present-zero; use has when that distinction matters. Array.map transforms a list and is unrelated to the Map collection.
+
+```ts
+class StockTracker {
+  #stock: Map<string, number> = new Map();
+  setStock(sku: string, quantity: number): void {
+    this.#stock.set(sku, quantity);
+  }
+  getStock(sku: string): number {
+    return this.#stock.get(sku) ?? 0;
+  }
+  hasSku(sku: string): boolean {
+    return this.#stock.has(sku);
+  }
+}
+```
+
+Use `Map<string, Product>` when each entry is a Product, or `Record<string, Product>` for a plain-object lookup. Use a `Product` property when storing one product. Class method parameters determine whether callers pass separate arguments or an object; an object can be supplied inline.
 
 ## 4. TypeScript foundations
 
@@ -818,6 +1035,38 @@ A tuple describes positions and their types; `number[]` describes an array of nu
 Type the earlier items and total function. Add `getTotal(items: Item[]): number`. Deliberately pass a string quantity and inspect the error. Then fix the input rather than silencing the compiler.
 
 **Recap:** types follow names; inference reduces noise; aliases/interfaces describe shapes; types do not validate runtime data.
+
+### Practice reminders: callbacks, interfaces and tuples
+
+```ts
+function applyToPrice(
+  price: number,
+  operation: (value: number) => number,
+): number {
+  return operation(price);
+}
+console.log(applyToPrice(1200, (value) => value + 300)); // 1500
+
+interface ProductBase { sku: string; priceMinor: number; }
+interface Describable { description?: string; }
+interface OrderItem extends ProductBase, Describable { quantity: number; }
+
+function printItem(item: OrderItem): void {
+  console.log(`${item.sku}: ${item.description ?? "No description"}`);
+}
+function formatPrice(price: [number, string]): string {
+  const [amountMinor, currency] = price;
+  return `${currency} ${(amountMinor / 100).toFixed(2)}`;
+}
+```
+
+`items.forEach(printItem)` passes the function directly; `items.forEach((item) => printItem(item))` wraps the call. Both work here. Contextual typing supplies callback parameter types. A required Item does not need optional chaining on the item itself; its optional description may still need a fallback. Empty descriptions are preserved by ??.
+
+Interface extends combines required shapes; it does not inherit executable code. Compatible shapes work even when their type names differ. `typeof` cannot identify an interface at runtime. `pop()` removes an element and may return undefined, so it is not a harmless inspection operation.
+
+Tuple positions are checked. Calling formatPrice with `["GBP", 44]` fails type checking; executing that deliberate error through tsx produces `44 NaN`. toFixed returns a string and must be applied to the major-unit amount after division.
+
+Completed practice: `exercises/04-typed-order.ts` combined OrderItem, line totals, reduce, formatting and forEach; expected total GBP 44.00.
 
 ## 5. Missing values, unions and narrowing
 
@@ -914,6 +1163,26 @@ Create `LookupResult` with found/item and missing/sku variants. Write a function
 
 **Recap:** optional differs from nullable; unions model alternatives; checks narrow; unknown requires proof; assertions provide none.
 
+### Completed quantity validation exercise
+
+```ts
+type QuantityResult =
+  | { success: true; quantity: number }
+  | { success: false; error: string };
+
+function validateQuantity(value: unknown): QuantityResult {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value <= 0) {
+    return { success: false, error: "Invalid quantity" };
+  }
+  return { success: true, quantity: value };
+}
+function describeQuantityResult(result: QuantityResult): string {
+  return result.success ? `Quantity accepted: ${result.quantity}` : result.error;
+}
+```
+
+Number.isFinite accepts fractions; safe-integer validation rejects them. typeof narrows unknown before numeric operations. A ternary can narrow types as well as an if. `as number` does not convert: unknown holding "1200" remains a string, so adding 300 yields "1200300"; Number(value) performs conversion. An exhaustive switch using assertNever catches an added "refunded" status until its case is implemented.
+
 ## 6. Generics, utilities and classes: focused introduction
 
 ### Generics preserve relationships
@@ -989,7 +1258,124 @@ Write a generic `last<T>` returning the final element or undefined. Define an up
 
 **Recap:** generics retain relationships; utilities transform types; readonly is not deep freezing; classes are available, not compulsory.
 
+### Chapter breakdown used in teaching
+
+1. Generics and inference (15–20 minutes).
+2. Constraints with extends (10–15 minutes).
+3. Partial, Pick, Omit, Readonly and Record (20–25 minutes).
+4. Classes, constructors, validation and privacy (15–20 minutes).
+5. Inheritance, abstract classes and interfaces (15–20 minutes).
+6. Enums versus unions (5–10 minutes), then catalogue exercise (15–20 minutes).
+
+These were initial estimates; repetition and questions increased actual time.
+
+### Classes: validation, inheritance and contracts from practice
+
+```ts
+class CartItem {
+  #quantity: number = 1;
+  constructor(public readonly sku: string, public priceMinor: number, quantity: number) {
+    this.setQuantity(quantity);
+  }
+  setQuantity(quantity: number): void {
+    if (!Number.isSafeInteger(quantity) || quantity <= 0) {
+      throw new Error("Quantity must be a positive safe integer");
+    }
+    this.#quantity = quantity;
+  }
+  getTotal(): number { return this.priceMinor * this.#quantity; }
+}
+
+interface FeeCalculator {
+  calculateFee(orderTotalMinor: number): number;
+}
+abstract class DeliveryMethod implements FeeCalculator {
+  constructor(public readonly name: string) {}
+  abstract calculateFee(orderTotalMinor: number): number;
+  describe(): string { return `Delivery method: ${this.name}`; }
+}
+class Shipping extends DeliveryMethod {
+  constructor() { super("Shipping"); }
+  calculateFee(orderTotalMinor: number): number {
+    return orderTotalMinor >= 5000 ? 0 : 300;
+  }
+}
+```
+
+A rejected setter call leaves the previous valid quantity unchanged. The initializer satisfies definite-assignment checking; TypeScript does not infer constructor initialization through a setter. This example validates quantity only, not price. When replacing quantity with #quantity, update every property access, including getTotal.
+
+`protected` allows access in the class and subclasses during type checking. `private` restricts it to the declaring class during type checking; # fields enforce runtime privacy and are not directly accessible in subclasses. abstract classes cannot be directly constructed; concrete subclasses implement abstract members. super calls the parent constructor. implements checks a contract without supplying code. A structurally compatible Shipping can satisfy FeeCalculator even without declaring implements itself.
+
+### Completed catalogue exercise and solution
+
+Practice file: `exercises/06-product-catalogue.ts`. Expected output: true, false, 1500, then one summary containing PRINT and 1500.
+
+<details>
+<summary>Catalogue solution — revisit after a fresh attempt</summary>
+
+```ts
+export {};
+interface Product { sku: string; priceMinor: number; description: string; }
+type ProductChanges = Partial<Omit<Product, "sku">>;
+type ProductSummary = Pick<Product, "sku" | "priceMinor">;
+
+class ProductCatalogue {
+  #products: Map<string, Product> = new Map();
+  add(product: Product): void { this.#products.set(product.sku, product); }
+  find(sku: string): Product | undefined { return this.#products.get(sku); }
+  update(sku: string, changes: ProductChanges): boolean {
+    const product = this.#products.get(sku);
+    if (product === undefined) return false;
+    this.#products.set(sku, { ...product, ...changes });
+    return true;
+  }
+  summaries(): ProductSummary[] {
+    return [...this.#products.values()].map((product) => ({
+      sku: product.sku,
+      priceMinor: product.priceMinor,
+    }));
+  }
+}
+```
+
+Pick changes the type, not runtime objects; summaries must construct smaller objects. Returning complete products can satisfy structural typing yet violate the requested output shape. Partial makes updates optional, so merge with the original before storing. Later spreads overwrite earlier fields. add/find share product references in this simple implementation; stronger ownership guarantees need deliberate copying.
+
+These utility types are not runtime validation or strict security boundaries. Our current config does not enable exactOptionalPropertyTypes, so explicit undefined in a Partial update deserves care. Excluding sku catches ordinary fresh-literal mistakes but does not strip unexpected runtime properties. Validate external updates before applying them.
+
+</details>
+
 ## 7. Modules, promises and external data
+
+Status: next lesson; not yet completed. Use shorter worked examples initially, then implement the final exercise from a brief.
+
+| Chapter | Focus | Estimate |
+|---|---|---:|
+| 7.1 | Modules: export, import, import type | 10–15 minutes |
+| 7.2 | Promises, Promise<T>, resolution and rejection | 15–20 minutes |
+| 7.3 | async/await and returned promises | 15–20 minutes |
+| 7.4 | Errors, sequential work and Promise.all | 15–20 minutes |
+| 7.5 | Fetch, HTTP failures and validating unknown JSON | 20–30 minutes |
+| Final exercise | Modules, async lookup and validation together | 20–30 minutes |
+
+### 7.1 First module exercise
+
+```ts
+// lessons/07-product.ts
+export interface Product { sku: string; priceMinor: number; }
+export function formatPrice(priceMinor: number): string {
+  return `GBP ${(priceMinor / 100).toFixed(2)}`;
+}
+```
+
+```ts
+// lessons/07-modules.ts
+import { formatPrice } from "./07-product.ts";
+import type { Product } from "./07-product.ts";
+const product: Product = { sku: "PRINT", priceMinor: 1200 };
+console.log(formatPrice(product.priceMinor)); // GBP 12.00
+```
+
+Run npm run typecheck, then npm run lesson -- lessons/07-modules.ts inside the container. Import/export already makes each file a module; export {} is unnecessary here. Our tsconfig permits .ts import extensions with the tsx runner. A type-only import disappears; the function import is needed at runtime.
 
 ### Modules
 
@@ -1048,7 +1434,7 @@ function parseStock(value: unknown): StockResponse {
     throw new Error("Invalid SKU");
   }
   if (!("quantity" in value) || typeof value.quantity !== "number"
-      || !Number.isInteger(value.quantity) || value.quantity < 0) {
+      || !Number.isSafeInteger(value.quantity) || value.quantity < 0) {
     throw new Error("Invalid quantity");
   }
   return { sku: value.sku, quantity: value.quantity };
@@ -1066,13 +1452,62 @@ async function fetchStock(url: string): Promise<StockResponse> {
 
 This fetch example needs an environment providing fetch, such as a modern browser or a suitable Node runtime. Network failures reject; HTTP errors such as 404 do not automatically reject fetch. JSON parsing can also throw. An `as StockResponse` cast would not prove the data is valid.
 
-### Exercise 7
+### Exercise 7 — revised integration brief
+
+Create a module exporting StockResponse, parseStock and an async fake lookup. Store fixture data in a Map<string, unknown>; get must handle a missing entry. The async lookup returns Promise<StockResponse> after validation. In a second module, import the function and use import type for the response type.
+
+Test valid data, null, missing quantity, a string quantity, zero stock and a rejected lookup. Await results and catch errors as unknown. First process SKUs sequentially, then process independent lookups with Promise.all and explain how the failure behaviour differs. Do not use any or as to silence input uncertainty.
+
+The earlier smaller warm-up remains useful:
 
 Create an async fake lookup returning a quantity. Await it and print whether an item is available. Make it throw for one SKU and handle the error. Run parseStock with valid data, null, a missing quantity and a string quantity.
 
 **Recap:** async returns Promise<T>; await can throw; concurrency is explicit; HTTP status needs checking; JSON is an untrusted boundary.
 
 ## 8. Practical application: order preparation
+
+Revised goal: implement from a brief with fewer supplied examples. Bring earlier Map, Set, reduce, unions and missing-value handling into one task. Add meaningful automated tests before extending the requirements.
+
+### Async repository contract
+
+Use an injected contract instead of configuring a database:
+
+```ts
+interface StockRepository {
+  getAvailable(sku: string): Promise<number>;
+}
+```
+
+Implement an in-memory version backed by Map<string, number>. Missing SKU means zero stock. An async method always returns a Promise, even when it reads memory immediately. Adapt prepareOrder to receive StockRepository and call repository.getAvailable(sku). The older solution in Appendix A injects a function instead; both approaches express the same dependency, but it is a baseline rather than the full revised exercise.
+
+### Stages and tests
+
+1. Define the domain and result union; agree validation and duplicate behaviour.
+2. Implement totals and validation independently.
+3. Inject the async repository and handle insufficient stock and lookup failure.
+4. Put implementation in an importable module; place tests under tests/ so npm test runs them.
+5. Change the duplicate rule: aggregate demand by SKU using a Map. Keep each line's price for calculating totals; stock demand depends on combined quantities.
+6. Add a regression test where each repeated line fits available stock individually, but their combined demand does not.
+
+Introduce Node's test runner and strict assertions with a small test:
+
+```ts
+// tests/order-total.test.ts
+import test from "node:test";
+import assert from "node:assert/strict";
+import { getTotal } from "../exercises/08-order.ts";
+
+test("totals multiple order lines", () => {
+  assert.equal(getTotal([
+    { sku: "A", priceMinor: 1000, quantity: 2 },
+    { sku: "B", priceMinor: 500, quantity: 1 },
+  ]), 2500);
+});
+```
+
+Export getTotal from the named module; keep demo execution in a separate runner so importing it does not run a demo. Promise-returning tests can use async callbacks and await the result. Use deepEqual for objects and rejects for operations intentionally designed to reject.
+
+Meaningful cases: valid order, empty order, zero/fractional quantity, negative/fractional price, missing SKU, insufficient stock, repository failure, duplicate rule and unchanged input. Demonstrate a failure, fix its cause, then rerun the affected test and the suite. A stock check does not reserve inventory; discuss that limitation.
 
 ### Requirements
 
@@ -1121,15 +1556,31 @@ Useful language:
 
 Explain decisions at natural boundaries. You do not need to narrate every keystroke. Accept suggestions, clarify them and incorporate them. Ask whether documentation, internet search and AI assistance are permitted before using them during the actual interview.
 
-### Mock A: 45 minutes
+### Primary mock: 90 minutes
 
-Build a function grouping transactions by account and summing amounts in minor units. Each transaction has id, accountId, amountMinor and status (pending/settled/reversed). Include settled transactions only. Return accounts ordered by total descending. Clarify whether negative amounts are allowed.
+Start from a small TypeScript repository with a brief and a few tests. The tutor acts as the interviewer: no complete solution up front, and requirement changes arrive after a working first version. Confirm assistance rules before starting. Reference lookup is useful in rehearsal, but follow the actual interview's rules.
 
-After the first version: deduplicate by transaction id. Clarify which record wins when duplicates disagree. Then discuss how you would obtain transactions asynchronously and validate JSON. Start with the synchronous implementation; do not build HTTP infrastructure first.
+| Time | Activity |
+|---|---|
+| 0–10 minutes | Inspect files, scripts and types; clarify inputs, outputs and edge cases |
+| 10–35 minutes | Implement a small synchronous transaction summary and run checks |
+| 35–55 minutes | Add meaningful tests and diagnose a failing case |
+| 55–75 minutes | Handle deduplication and an async repository requirement |
+| 75–90 minutes | Complete checks, explain trade-offs and discuss remaining limitations |
 
-### Mock B: 45 minutes
+Task: group transactions by account and sum amounts in minor units. Each has id, accountId, amountMinor and status (pending/settled/reversed). Include settled transactions only; sort accounts by total descending. Agree negative-amount and tie behaviour. Use Map for grouping, with explicit missing-value handling.
 
-Implement a feature evaluator with a global enabled flag and per-user boolean overrides. An explicit false override must take precedence just like true. Clarify missing features and missing users. Add optional allowed segments, agreeing precedence before coding. Your domain knowledge helps; practise writing it in TS rather than translating a large existing solution.
+Requirement change: deduplicate by transaction id; clarify which record wins when duplicates disagree and whether deduplication happens before filtering status. Add a test showing that chosen policy. Then inject an async transaction repository. Validate unknown boundary data if supplied; do not assert it into a domain type. The session includes one seeded defect to investigate using tests and compiler feedback.
+
+Do not browse the solution during the mock. Explain decisions at natural boundaries, invite feedback and keep a working increment. A task not fully finished can still be reviewed for correctness, collaboration and diagnosis; record incomplete work honestly.
+
+### Alternative fresh practice: feature evaluator
+
+For a second shorter session, implement a global enabled flag and per-user boolean overrides. Explicit false overrides must take precedence just like true. Clarify missing features/users. Then add segments and agree precedence. Use your domain experience, but practise writing a small TS implementation without translating a large PHP solution.
+
+### Review and revision: 20–30 minutes after the mock
+
+Identify three concrete gaps, reproduce each correction in a small fresh example, and choose one task for another attempt. Prioritise Map APIs, array outputs, return statements, union narrowing, async errors and test assertions if they caused difficulty. Avoid adding advanced material merely because the core lesson headings are complete.
 
 ### Review rubric
 
@@ -1311,8 +1762,8 @@ async function prepareOrder(
 
   const seen = new Set<string>();
   for (const item of order.items) {
-    if (!Number.isInteger(item.priceMinor) || item.priceMinor < 0
-        || !Number.isInteger(item.quantity) || item.quantity <= 0) {
+    if (!Number.isSafeInteger(item.priceMinor) || item.priceMinor < 0
+        || !Number.isSafeInteger(item.quantity) || item.quantity <= 0) {
       return { kind: "invalid", reason: `Invalid line: ${item.sku}` };
     }
     if (seen.has(item.sku)) {
@@ -1324,7 +1775,7 @@ async function prepareOrder(
   try {
     for (const item of order.items) {
       const available = await lookup(item.sku);
-      if (!Number.isInteger(available) || available < 0) {
+      if (!Number.isSafeInteger(available) || available < 0) {
         return { kind: "lookupFailure", reason: "Invalid stock response" };
       }
       if (available < item.quantity) {
@@ -1403,6 +1854,32 @@ main().catch((error: unknown) => {
 The lookup is injected, making behaviour easy to check without HTTP. Checks are sequential for clarity and early exit. Validation precedes external calls. Lookup failure is modelled separately from invalid input. Limits to discuss: trusted typed Order input, integer precision for very large totals, stock changing after lookup, lack of reservation, and the deliberate duplicate-SKU rule. Production code would address these according to requirements.
 
 ## Appendix B. Quick revision reference
+
+### Execution environments and deferred tooling
+
+Our scripts run in Node.js inside Docker. The same general JavaScript logic can run in a browser after TypeScript is transformed to JavaScript and an HTML page loads it. console.log appears in the browser developer console, not on the page. Browser APIs such as document differ from Node filesystem and server APIs. Our current tsconfig targets Node types and is not configured as a browser UI project.
+
+React is in the broader learning plan, not Lessons 0–9. Database access is also deferred. Learn async patterns before adding either.
+
+PhpStorm is the current editor. Node has a built-in Inspector debugger for breakpoints, stepping, variable inspection and call stacks. Docker debugging needs an inspector-enabled process, a locally published port (normally 9229), and correct source/path mapping. --inspect-brk pauses at startup. Setup was discussed and explicitly deferred; no debug command or Compose changes have been applied. Do not expose the debugging port publicly.
+
+### Quick recall of mistakes encountered
+
+| Mistake | Correction |
+|---|---|
+| Map.set called with a single object | Supply two arguments: set(key, value) |
+| Map.add used for updates | Map uses set; Set uses add |
+| Lookup expression in a function without return | Return the expression to fulfil the declared return type |
+| Missing stock returned as undefined despite the brief | get(sku) ?? 0, with number return type |
+| Plain product returned as a Pick summary | Construct the smaller object explicitly |
+| Number.isFinite used to reject decimals | Use Number.isSafeInteger plus the business range check |
+| price displayed as 44 rather than 44.00 | (priceMinor / 100).toFixed(2) |
+| Enum value logged instead of predicate result | Call isPaymentComplete(PaymentState.Paid) |
+| #quantity rename missed in getTotal | Update every access to this.#quantity |
+| filter/forEach used to retrieve one missing item | find returns one item or undefined; handle with ?. and ?? |
+| Sort comparator returned a boolean | Return a negative/zero/positive number; copy before sorting |
+
+
 
 | PHP habit/concept | JS / TS equivalent or difference |
 |---|---|
