@@ -2,7 +2,7 @@
 
 Prepared for Dimitrios • 1 October 2026
 
-Updated 4 October 2026 after Lessons 0–6 and the revised interview brief.
+Updated 5 October 2026 after completing Lessons 0–8, including async integration, automated tests and the changed duplicate-SKU requirement.
 
 ## Purpose and assumptions
 
@@ -78,9 +78,9 @@ Chapter groups follow the teaching sequence. Some document subsections and suppl
 | [4. TypeScript foundations](#4-typescript-foundations) | Complete | 60–95 min |
 | [5. Missing values, unions and narrowing](#5-missing-values-unions-and-narrowing) | Complete | 65–105 min |
 | [6. Generics, utilities and classes](#6-generics-utilities-and-classes-focused-introduction) | Complete | 95–130 min |
-| [7. Modules, promises and external data](#7-modules-promises-and-external-data) | Next | 95–135 min |
-| [8. Practical order application](#8-practical-application-order-preparation) | Remaining | 60–90 min |
-| [9. Peer programming rehearsal](#9-peer-programming-rehearsal) | Remaining | 110–120 min |
+| [7. Modules, promises and external data](#7-modules-promises-and-external-data) | Complete | 95–135 min |
+| [8. Practical order application](#8-practical-application-order-preparation) | Complete | 60–90 min |
+| [9. Peer programming rehearsal](#9-peer-programming-rehearsal) | Next | 110–120 min |
 
 ### Index: Lesson 0 — Environment and tools
 
@@ -180,7 +180,7 @@ Status: **Complete**. [Go to Lesson 6](#6-generics-utilities-and-classes-focused
 
 ### Index: Lesson 7 — Modules, promises and external data
 
-Status: **Next**. [Go to Lesson 7](#7-modules-promises-and-external-data).
+Status: **Complete**. [Go to Lesson 7](#7-modules-promises-and-external-data).
 
 | Chapter | Topics | Estimate |
 |---|---|---:|
@@ -193,7 +193,7 @@ Status: **Next**. [Go to Lesson 7](#7-modules-promises-and-external-data).
 
 ### Index: Lesson 8 — Practical order application
 
-Status: **Remaining**. [Go to Lesson 8](#8-practical-application-order-preparation).
+Status: **Complete**. [Go to Lesson 8](#8-practical-application-order-preparation).
 
 | Chapter | Topics | Estimate |
 |---|---|---:|
@@ -206,7 +206,7 @@ Status: **Remaining**. [Go to Lesson 8](#8-practical-application-order-preparati
 
 ### Index: Lesson 9 — Peer programming rehearsal
 
-Status: **Remaining**. [Go to Lesson 9](#9-peer-programming-rehearsal).
+Status: **Next**. [Go to Lesson 9](#9-peer-programming-rehearsal).
 
 | Chapter | Topics | Estimate |
 |---|---|---:|
@@ -223,25 +223,25 @@ Reference appendices: A — solutions; B — quick revision, common mistakes and
 
 ## Roadmap, progress and remaining time
 
-### Progress as of Sunday, 4 October
+### Progress as of Monday, 5 October, 18:39 UK
 
-Lessons **0–6 are complete**, including the typed order, quantity-result, product catalogue and StockTracker exercises. Completion means we have covered and practised the material; it does not mean every signature is available from memory. Map operations, missing-value handling and combining concepts remain useful revision targets.
+Lessons **0–8 are complete**. Lesson 7 included modules, promises, async/await, concurrent lookups, runtime validation and stock/customer integration exercises. Lesson 8 combined domain rules, an injected repository, automated tests, runtime failures, aggregated SKU demand and mutation checks. All tests passed after the final changes, as reported in our session.
 
-The interview brief confirms only 90 minutes of TypeScript pairing. Node.js, React, database access, the supplied repository and permitted assistance remain unknown. Prepare general programming, data handling, async execution, testing and collaboration. Ask the recruiter about the environment and permitted references if possible.
+Completion means covered and practised, not that every pattern is available independently from memory. The strongest remaining preparation is a fresh problem with less guidance. Useful revision targets are Map.get/set/has, adding to an accumulator, for...of, returning versus logging, and deciding which layer handles an error.
+
+The confirmed interview brief remains a 90-minute TypeScript pairing session. The framework, task, supplied environment and permitted assistance are unknown.
 
 | Remaining work | Focus | Planning estimate |
 |---|---|---:|
-| Lesson 7 | Modules, promises, async/await, errors, concurrency and runtime validation | 95–135 minutes |
-| Lesson 8 | Staged order application, async repository, meaningful tests and a changed requirement | 60–90 minutes |
-| Lesson 9 | Realistic pairing mock | 90 minutes + 20–30 minutes review |
+| Lesson 9 | Fresh pairing mock, followed by feedback and targeted revision | 90 minutes + 20–30 minutes review |
+| Optional recall | Revisit errors exposed by the mock | 15–30 minutes |
 
-Allow approximately **4½–6 focused hours**, with additional breaks and reinforcement. Earlier estimates proved optimistic for learning through questions and repeated practice. These are planning ranges, not deadlines for understanding.
+Allow **110–120 focused minutes for Lesson 9**, excluding breaks. Earlier lesson estimates remain historical planning estimates, not measured completion times or a judgement of pace. Repeated typing, questions and debugging took additional time.
 
 | Day | Plan |
 |---|---|
-| Sunday, 4 October | Complete Lessons 7–8 if energy permits; repeat earlier tools inside the new tasks |
-| Monday, 5 October | 90-minute mock, review, targeted revision and a second smaller task |
-| Tuesday, 6 October, morning | Light recall, environment and screen-sharing check; interview at 14:00 |
+| Monday, 5 October, evening | Break, then Lesson 9 mock and review; targeted recall if energy permits |
+| Tuesday, 6 October, morning | Light recall and environment/screen-sharing check; interview at 14:00 |
 
 Prioritise independent implementation over collecting advanced features. React, real database configuration, event-loop depth and advanced type programming are optional extensions. Node applications can connect to databases through drivers/ORMs, but database setup is not part of Lessons 0–9. TypeScript is the type system, not the database connector.
 
@@ -255,10 +255,10 @@ Start a session with 10 minutes from a blank file: Map lookup/update, an array t
 - [x] Practised annotations, interfaces, tuples, unions and narrowing.
 - [x] Practised generics, utilities, classes and Map-backed storage.
 - [ ] Reproduce the earlier patterns independently in a new task.
-- [ ] Write and await a Promise-returning function.
-- [ ] Validate external JSON rather than assert its type.
-- [ ] Write meaningful tests and debug a failing case.
-- [ ] Complete the application and handle a requirement change.
+- [x] Write and await a Promise-returning function.
+- [x] Validate external JSON rather than assert its type.
+- [x] Write meaningful tests and debug a failing case.
+- [x] Complete the application and handle a requirement change.
 - [ ] Complete a 90-minute mock while explaining decisions.
 
 ## 0. Understanding and creating a TypeScript environment
@@ -1346,7 +1346,7 @@ These utility types are not runtime validation or strict security boundaries. Ou
 
 ## 7. Modules, promises and external data
 
-Status: next lesson; not yet completed. Use shorter worked examples initially, then implement the final exercise from a brief.
+Status: **Complete**, including stock-service and customer-service integration exercises. Repeat from a brief for independent recall.
 
 | Chapter | Focus | Estimate |
 |---|---|---:|
@@ -1464,80 +1464,182 @@ Create an async fake lookup returning a quantity. Await it and print whether an 
 
 **Recap:** async returns Promise<T>; await can throw; concurrency is explicit; HTTP status needs checking; JSON is an untrusted boundary.
 
+### Lesson 7 notes from integration practice
+
+- Importing a module executes its top-level runtime code. Keep demonstration logs in a separate runner so imports do not print unrelated output.
+- `await isInStock(sku)` obtains a boolean but does not print it. Use the returned value explicitly.
+- A synchronous Map.get does not need await, even inside an async function.
+- `data === undefined` checks absence; `data === "undefined"` compares with a string.
+- The parser validates its argument and returns a fresh object; it does not look up fixtures. The lookup retrieves fixtures and delegates validation. The runner chooses whether to log and continue or stop.
+- Catching and logging inside a function declared `Promise<Customer>` without returning or rethrowing loses its required result. Let errors propagate when the caller owns recovery.
+- Put try/catch inside a sequential loop to continue after each failed item. Rethrowing stops that flow.
+- Promise.all rejects when an input rejects; it does not wait for a particular final SKU to discover failure, and it does not cancel other work. Successful results retain input order.
+
 ## 8. Practical application: order preparation
 
-Revised goal: implement from a brief with fewer supplied examples. Bring earlier Map, Set, reduce, unions and missing-value handling into one task. Add meaningful automated tests before extending the requirements.
+Status: **Complete**. Chapters 8.1–8.6 were practised and the final test suite passed. The final duplicate policy allows repeated SKUs and checks their combined demand.
 
-### Async repository contract
+### 8.1 Requirements, domain and result types
 
-Use an injected contract instead of configuring a database:
+Working files in our project:
+
+- `application/lessons/lesson-08/08-order.ts`
+- `application/lessons/lesson-08/08-stock-repository.ts`
+- `application/tests/08-order.test.ts`
+
+Each OrderItem has `sku`, `priceMinor` and `quantity`. Prices and totals remain in minor units. Reject empty orders, unsafe/fractional/negative prices and unsafe/fractional/non-positive quantities. Zero price is valid. Missing stock means zero. Preparing an order checks availability without reserving or consuming stock.
 
 ```ts
-interface StockRepository {
+export interface OrderItem {
+  sku: string;
+  priceMinor: number;
+  quantity: number;
+}
+export type OrderValidation =
+  | { valid: true }
+  | { valid: false; error: string };
+export type PreparationResult =
+  | { kind: "ready"; totalMinor: number }
+  | { kind: "invalid"; error: string }
+  | { kind: "insufficient"; sku: string; available: number }
+  | { kind: "lookupFailure"; error: string };
+export interface StockRepository {
   getAvailable(sku: string): Promise<number>;
+  hasSku(sku: string): Promise<boolean>;
 }
 ```
 
-Implement an in-memory version backed by Map<string, number>. Missing SKU means zero stock. An async method always returns a Promise, even when it reads memory immediately. Adapt prepareOrder to receive StockRepository and call repository.getAvailable(sku). The older solution in Appendix A injects a function instead; both approaches express the same dependency, but it is a baseline rather than the full revised exercise.
+hasSku was added for Map/interface practice. prepareOrder needs only getAvailable: missing SKU is insufficient stock, while lookupFailure represents an operation throwing.
 
-### Stages and tests
+### 8.2 Totals and validation
 
-1. Define the domain and result union; agree validation and duplicate behaviour.
-2. Implement totals and validation independently.
-3. Inject the async repository and handle insufficient stock and lookup failure.
-4. Put implementation in an importable module; place tests under tests/ so npm test runs them.
-5. Change the duplicate rule: aggregate demand by SKU using a Map. Keep each line's price for calculating totals; stock demand depends on combined quantities.
-6. Add a regression test where each repeated line fits available stock individually, but their combined demand does not.
+calculateLineTotal returns `item.priceMinor * item.quantity`. calculateOrderTotal sums line totals using for...of, with zero as the initial accumulator and a final return. Empty totals return zero even though preparing an empty order is invalid: these functions have different responsibilities.
 
-Introduce Node's test runner and strict assertions with a small test:
+validateOrder returns an OrderValidation value; normal invalid input does not throw. Inspect `validation.valid`, then use `validation.error` in the narrowed failure branch. Use Number.isSafeInteger and domain range checks. Convert to pounds only when formatting for display, not during total calculation.
+
+### 8.3 Async repository and stock checking
 
 ```ts
-// tests/order-total.test.ts
+// 08-stock-repository.ts
+import type { StockRepository } from "./08-order.ts";
+export class InMemoryStockRepository implements StockRepository {
+  private stock: Map<string, number>;
+  constructor(stock: Map<string, number>) {
+    this.stock = stock;
+  }
+  async getAvailable(sku: string): Promise<number> {
+    return this.stock.get(sku) ?? 0;
+  }
+  async hasSku(sku: string): Promise<boolean> {
+    return this.stock.has(sku);
+  }
+}
+```
+
+Map.get returns a value or undefined; Map.has returns a boolean. Checking `map.has(sku) !== undefined` is always true. `"quantity" in map` does not check stored entries. Map.set takes two arguments: key and value.
+
+An async method wraps its returned number in a promise. Await getAvailable inside try/catch; return insufficient if available is below demand and lookupFailure on an exception. Keep the domain module independent of the concrete repository: it needs the interface, not an import of InMemoryStockRepository.
+
+### 8.4 Automated tests and debugging
+
+Tests live under tests/ because our script runs `tsx --test tests/*.test.ts`. Import source from `../lessons/lesson-08/08-order.ts`. Imported source should not execute demo logging.
+
+```ts
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getTotal } from "../exercises/08-order.ts";
+import { calculateLineTotal } from "../lessons/lesson-08/08-order.ts";
 
-test("totals multiple order lines", () => {
-  assert.equal(getTotal([
-    { sku: "A", priceMinor: 1000, quantity: 2 },
-    { sku: "B", priceMinor: 500, quantity: 1 },
-  ]), 2500);
+test("calculates a line total in minor units", () => {
+  assert.equal(calculateLineTotal({
+    sku: "PRINT", priceMinor: 1200, quantity: 2,
+  }), 2400);
 });
 ```
 
-Export getTotal from the named module; keep demo execution in a separate runner so importing it does not run a demo. Promise-returning tests can use async callbacks and await the result. Use deepEqual for objects and rejects for operations intentionally designed to reject.
+Use assert.equal for primitive values and assert.deepEqual for result objects. Async tests await prepareOrder before asserting. A test without an assertion can pass despite the wrong returned value. A passing suite does not replace `npm run typecheck`.
 
-Meaningful cases: valid order, empty order, zero/fractional quantity, negative/fractional price, missing SKU, insufficient stock, repository failure, duplicate rule and unchanged input. Demonstrate a failure, fix its cause, then rerun the affected test and the suite. A stock check does not reserve inventory; discuss that limitation.
+We deliberately changed a calculation to expose a regression, read actual versus expected values, then restored it. We also used an object satisfying StockRepository as a fake: getAvailable throws a chosen Error, allowing a predictable lookupFailure assertion. A second fake succeeds for PRINT then throws for BOOK, testing failure after prior successful work. A valid interface does not guarantee successful runtime operations.
 
-### Requirements
+Cases practised: line totals, empty total, multiple lines, repeated-line total, invalid empty order, zero price, zero quantity, fractional price, existing/missing stock, present-zero SKU, ready order, insufficient stock, repository failures, duplicate policy and unchanged input.
 
-Implement an order preparation function. Each line has SKU, unit price in minor units and quantity. Reject empty orders, negative/non-integer prices and non-positive/non-integer quantities. Calculate the total. Check stock through an injected async function. Return a discriminated result. Do not mutate the input.
+### 8.5 Requirement change: aggregate SKU demand
 
-For this first version require unique SKUs. Reject duplicates explicitly; otherwise checking each duplicate independently could approve an order exceeding total stock. Payment, persistence, HTTP and reservations are outside this exercise. A successful check does not reserve stock.
+Initial rule: reject duplicates with Set<string>. Revised rule: allow duplicates and sum demand per SKU using Map<string, number>.
 
-### Suggested working order
+First write a failing test: two PRINT lines each request 2, stock is 3, expected insufficient. The initial implementation returns invalid Duplicate SKU. That is an expected failure against the changed requirement.
 
-1. Define Item, Order and the result type.
-2. Implement a synchronous total function.
-3. Implement validation with a loop and Set.
-4. Inject and await stock lookup.
-5. Handle insufficient stock.
-6. Decide whether lookup failure should throw or return a result; explain your choice.
-7. Check representative cases before refactoring.
+```ts
+const quantitiesBySku = new Map<string, number>();
+for (const item of items) {
+  const currentQuantity = quantitiesBySku.get(item.sku) ?? 0;
+  quantitiesBySku.set(item.sku, currentQuantity + item.quantity);
+}
+```
 
-### Example cases
+Storing only currentQuantity leaves every first entry at zero. Add the current line's quantity. Iterating `for (const [sku, requestedQuantity] of quantitiesBySku)` destructures each key/value entry.
 
-| Input | Expected |
+Keep price totals based on original lines, so differing line prices remain part of the calculation. Update the old duplicate-rejection test to expect ready when combined demand fits stock; do not retain contradictory policies in the suite.
+
+| Example | Final expected result |
 |---|---|
-| A at 1000 × 2 and B at 500 × 1, adequate stock | Ready, total 2500 |
-| Empty lines | Invalid |
-| Quantity 0 or 1.5 | Invalid |
-| Negative price | Invalid |
-| Repeated SKU | Invalid |
-| Stock below quantity | Insufficient stock |
-| Lookup rejects | Lookup failure |
+| PRINT price 2000, quantity 1, twice; stock 5 | ready, totalMinor 4000 |
+| PRINT price 1200, quantity 2, twice; stock 3 | insufficient, sku PRINT, available 3 |
+| Missing SKU with positive demand | insufficient, available 0 |
+| Repository throws Error("Stock service unavailable") | lookupFailure with that message |
 
-Try the implementation before reading the solution below. For a second attempt, remove the unique-SKU restriction and aggregate demand by SKU. Discuss conflicting prices and keep total calculation separate from stock demand.
+<details>
+<summary>Final prepareOrder reference — open after attempting the exercise</summary>
+
+This function belongs in 08-order.ts alongside the types, validateOrder and calculateOrderTotal.
+
+```ts
+export async function prepareOrder(
+  items: OrderItem[],
+  repository: StockRepository,
+): Promise<PreparationResult> {
+  const validation = validateOrder(items);
+  if (!validation.valid) {
+    return { kind: "invalid", error: validation.error };
+  }
+
+  const quantitiesBySku = new Map<string, number>();
+  for (const item of items) {
+    const currentQuantity = quantitiesBySku.get(item.sku) ?? 0;
+    quantitiesBySku.set(item.sku, currentQuantity + item.quantity);
+  }
+
+  for (const [sku, requestedQuantity] of quantitiesBySku) {
+    try {
+      const available = await repository.getAvailable(sku);
+      if (available < requestedQuantity) {
+        return { kind: "insufficient", sku, available };
+      }
+    } catch (error: unknown) {
+      return {
+        kind: "lookupFailure",
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+  return { kind: "ready", totalMinor: calculateOrderTotal(items) };
+}
+```
+
+</details>
+
+### 8.6 Mutation checks and limitations
+
+Snapshot the order with `items.map((item) => ({ ...item }))`, await preparation, and deepEqual items against the snapshot. Our fields are primitives, so copying each object is enough here. `const originalItems = items` shares the same array and can hide mutations. Also assert that stock remains unchanged after preparation.
+
+Limitations reviewed:
+
+- Ready means sufficient when checked, not reserved. Two orders requesting 4 with stock 5 can both receive ready, even sequentially, because preparation never reduces stock. State the reservation assumption explicitly.
+- Production reservations need an atomic check-and-reserve operation, such as an appropriate transaction with locking or a conditional update. Merely adding subtraction after a separate lookup does not guarantee safety under concurrency.
+- Safe integer inputs do not guarantee safe products or sums. Line multiplication, order totals and aggregated quantities can exceed Number.MAX_SAFE_INTEGER. Production code should guard calculated values or choose a suitable representation.
+- The in-memory repository assumes valid stock numbers. A real external adapter should validate returned data before exposing it to domain logic.
+- SKU-format rules, conflicting price policy, payments, persistence, retries and reservations were not implemented. Clarify these requirements before extending the design.
+
+**Completion:** meaningful tests passed after the policy change, input and stock remained unchanged, and implementation limitations were discussed. Independent fluency is the next goal in Lesson 9.
 
 ## 9. Peer programming rehearsal
 
@@ -1734,7 +1836,9 @@ void main();
 
 For parseStock, valid input returns a fresh object; null, missing quantity and string quantity throw. A runtime validator must inspect fields, not merely assert the type.
 
-### Complete application solution
+### Earlier application baseline (unique-SKU policy)
+
+This preserves the earlier exercise. It rejects repeated SKUs and uses an injected function; it is not the final Lesson 8 policy. Use the collapsed final prepareOrder reference in Lesson 8 for aggregated demand and the repository interface.
 
 Paste this block alone into a file or Playground. It includes its own domain types and checks.
 
