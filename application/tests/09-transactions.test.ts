@@ -257,7 +257,7 @@ test(
 
 test(
     'returns failure when loaded transactions contain an invalid amount',
-    async() => {
+    async () => {
         const repository: TransactionRepository = {
             async getAll(): Promise<Transaction[]> {
                 return [

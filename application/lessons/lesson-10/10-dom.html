@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quantity calculator</title>
+</head>
+<body>
+<label for="quantity">Quantity</label>
+<input id="quantity" type="number" value="2">
+
+<button id="calculate">Calculate</button>
+<button id="reset">Reset</button>
+<p id="result"></p>
+
+<script type="module">
+    const input = document.querySelector("#quantity");
+    const button = document.querySelector("#calculate");
+    const result = document.querySelector("#result");
+    const reset = document.querySelector("#reset");
+
+    if (
+        input === null
+        || button === null
+        || result === null
+        || reset === null
+    ) {
+        throw new Error("Required page elements are missing");
+    }
+
+    reset.addEventListener("click", () => {
+        result.textContent = "";
+        input.value = "1";
+    })
+
+    input.addEventListener("input", () => {
+        const quantity = Number(input.value);
+
+        if (!Number.isSafeInteger(quantity) || quantity <= 0) {
+            result.textContent = "Invalid quantity";
+            return;
+        }
+
+        result.textContent =
+            `Total: GBP ${(quantity * 1200 / 100).toFixed(2)}`;
+    });
+</script>
+</body>
+</html>
