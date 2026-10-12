@@ -69,6 +69,10 @@ Shell syntax, JSON structure, YAML structure and helper argument forwarding were
 
 The included test is an environment smoke check, not a business test. Write meaningful behaviour checks as we build exercises.
 
+## Learning materials
+
+See the [TypeScript Academy roadmap and lessons](notes/README.md).
+
 ## References
 
 - https://nodejs.org/en/about/previous-releases
